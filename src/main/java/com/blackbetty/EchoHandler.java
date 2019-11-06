@@ -1,7 +1,6 @@
 package com.blackbetty;
 
 import net.dv8tion.jda.api.audio.*;
-import net.dv8tion.jda.api.entities.User;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
