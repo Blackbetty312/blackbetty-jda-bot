@@ -1,5 +1,7 @@
 package com.blackbetty;
 
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -24,6 +26,22 @@ public class AudioEcho extends ListenerAdapter {
         }
         if(content.equals("!leave")) {
             disconnectFrom(event);
+        }
+
+        changeActivity(content);
+
+
+
+    }
+
+    private void changeActivity(String content) {
+        String title = content.substring(content.indexOf(" "));
+        if(content.startsWith("!playing ")) {
+            Main.jda.getPresence().setActivity(Activity.playing(title));
+        } else if (content.startsWith("!listening ")){
+            Main.jda.getPresence().setActivity(Activity.listening(title));
+        } else if (content.startsWith("!watching ")) {
+            Main.jda.getPresence().setActivity(Activity.watching(title));
         }
     }
 
