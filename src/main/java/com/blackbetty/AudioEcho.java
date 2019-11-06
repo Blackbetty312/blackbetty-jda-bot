@@ -14,6 +14,6 @@ public class AudioEcho extends ListenerAdapter {
         Member member = event.getMember();
         GuildVoiceState voiceState = member.getVoiceState();
         VoiceChannel voiceChannel = voiceState.getChannel();
-        
+        // comment for nothing xD
     }
 }
