@@ -28,20 +28,23 @@ public class AudioEcho extends ListenerAdapter {
             disconnectFrom(event);
         }
 
-        changeActivity(content);
+        changeActivity(content, event);
 
 
 
     }
 
-    private void changeActivity(String content) {
-        String title = content.substring(content.indexOf(" "));
+    private void changeActivity(String content, GuildMessageReceivedEvent event) {
+        String title = null;
         if(content.startsWith("!playing ")) {
-            Main.jda.getPresence().setActivity(Activity.playing(title));
+            title = content.substring(content.indexOf(" "));
+            event.getJDA().getPresence().setActivity(Activity.playing(title));
         } else if (content.startsWith("!listening ")){
-            Main.jda.getPresence().setActivity(Activity.listening(title));
+            title = content.substring(content.indexOf(" "));
+            event.getJDA().getPresence().setActivity(Activity.listening(title));
         } else if (content.startsWith("!watching ")) {
-            Main.jda.getPresence().setActivity(Activity.watching(title));
+            title = content.substring(content.indexOf(" "));
+            event.getJDA().getPresence().setActivity(Activity.watching(title));
         }
     }
 
@@ -85,4 +88,6 @@ public class AudioEcho extends ListenerAdapter {
     {
         channel.sendMessage("Unable to connect to ``" + comment + "``, no such channel!").queue();
     }
+
+    //TODO Add logs and errorLogs
 }
