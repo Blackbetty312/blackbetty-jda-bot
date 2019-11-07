@@ -19,6 +19,7 @@ public class Main {
                     .addEventListeners(new PapieszCommand())
                     .addEventListeners(new UsunCommand())
                     .addEventListeners(new KomiksCommand())
+                    .addEventListeners(new TwitchEmotes())
                     .setActivity(Activity.listening("grane jest tutaj"))
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
                     .build();
