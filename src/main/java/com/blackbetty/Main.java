@@ -18,6 +18,7 @@ public class Main {
                     .addEventListeners(new AudioEcho())
                     .addEventListeners(new PapieszCommand())
                     .addEventListeners(new UsunCommand())
+                    .addEventListeners(new KomiksCommand())
                     .setActivity(Activity.listening("grane jest tutaj"))
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
                     .build();
