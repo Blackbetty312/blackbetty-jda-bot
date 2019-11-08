@@ -3,6 +3,7 @@ package com.blackbetty;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.json.JSONArray;
@@ -41,14 +42,20 @@ public class TwitchEmotes extends ListenerAdapter {
             String link = emotes.get(emote);
             if(content.contentEquals(emote)) {
                 MessageBuilder builder = new MessageBuilder();
-                InputStream file = null;
-                try {
-                    file = new URL(link).openStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                builder.append(file);
-                event.getChannel().sendFile(file, emote + ".png").queue();
+//                InputStream file = null;
+//                try {
+//                    file = new URL(link).openStream();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                builder.append(file);
+//                event.getChannel().sendFile(file, emote + ".png").queue();
+                MessageEmbed embed = new EmbedBuilder()
+                        .setTitle(message.getAuthor().getName())
+                        .setThumbnail(link)
+                        .build();
+                event.getChannel().sendMessage(embed).queue();
+                message.delete().queue();
             }
         }
     }
