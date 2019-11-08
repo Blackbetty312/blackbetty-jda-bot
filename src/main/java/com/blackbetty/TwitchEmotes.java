@@ -14,12 +14,13 @@ import javax.annotation.Nonnull;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Set;
 
 public class TwitchEmotes extends ListenerAdapter {
     private final int PAGES_TO_READ_FROM_API = 3;
-    private HashMap<String, String> emotes = null;
+    private HashMap<String, String> emotes;
 
     TwitchEmotes() {
         emotes = getEmotes();
@@ -41,17 +42,8 @@ public class TwitchEmotes extends ListenerAdapter {
         for(String emote : emotes.keySet()) {
             String link = emotes.get(emote);
             if(content.contentEquals(emote)) {
-                MessageBuilder builder = new MessageBuilder();
-//                InputStream file = null;
-//                try {
-//                    file = new URL(link).openStream();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                builder.append(file);
-//                event.getChannel().sendFile(file, emote + ".png").queue();
                 MessageEmbed embed = new EmbedBuilder()
-                        .setTitle(message.getAuthor().getName())
+                        .setTitle(message.getAuthor().getName() + " wysłał emotke ")
                         .setThumbnail(link)
                         .build();
                 event.getChannel().sendMessage(embed).queue();
@@ -65,10 +57,9 @@ public class TwitchEmotes extends ListenerAdapter {
         HttpURLConnection apiPathConnection = (HttpURLConnection) apiPath.openConnection();
         InputStream is = apiPathConnection.getInputStream();
         try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
+            return new JSONObject(jsonText);
         } finally {
             is.close();
         }
@@ -84,7 +75,7 @@ public class TwitchEmotes extends ListenerAdapter {
     }
 
     private String parseCdnUrl(String url) {
-        return url.substring(url.lastIndexOf("/") + 1, url.length());
+        return url.substring(url.lastIndexOf("/") + 1);
     }
 
     private HashMap<String, String> getEmotes() {
